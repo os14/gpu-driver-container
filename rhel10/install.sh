@@ -13,7 +13,7 @@ dep_installer () {
         ca-certificates \
         curl-minimal \
         gcc \
-        glibc.i686 \
+        glibc \
         make \
         cpio \
         kmod
