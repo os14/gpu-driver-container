@@ -41,10 +41,13 @@ dep_installer () {
 
   # Download unzboot as kernel images are compressed in the zboot format on RHEL 10 arm64
   # unzboot is only available on the EPEL RPM repo
-  rpm --import  https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-10
-  dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
-  dnf config-manager --enable epel
-  dnf install -y unzboot
+  # Only install on aarch64 where it's actually needed
+  if [ "$DRIVER_ARCH" = "aarch64" ]; then
+    rpm --import  https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-10
+    dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+    dnf config-manager --enable epel
+    dnf install -y unzboot
+  fi
 
   rm -rf /var/cache/yum/*
 }
